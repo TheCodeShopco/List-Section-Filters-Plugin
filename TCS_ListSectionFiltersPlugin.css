@@ -63,6 +63,10 @@
     right: calc(var(--form-field-border-thickness) + var(--form-field-padding-horizontal));
     color: var(--dynamic-input-text-color);
   }
+
+  .select-dropdown-icon svg {
+    display: block;
+  }
   
   #list-section-select-bar {
     width: 100%;
