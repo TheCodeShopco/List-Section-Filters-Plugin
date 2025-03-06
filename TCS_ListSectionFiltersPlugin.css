@@ -37,6 +37,42 @@
     font-style: var(--form-block-input-text-font-font-style) !important;
   }
   
+  #list-section-search-bar::-webkit-input-placeholder {
+    opacity: 1 !important;
+    color: hsla(var(--dynamic-input-text-color-hsl, var(--fallback-black-hsl)), calc(var(--dynamic-input-text-color-a, 1) * 0.55));
+    font-weight: var(--form-block-placeholder-text-font-font-weight) !important;
+    font-family: var(--form-block-placeholder-text-font-font-family) !important;
+    font-size: calc(var(--form-block-placeholder-text-font-font-size-value)* 1rem) !important;
+    line-height: var(--form-block-placeholder-text-font-line-height) !important;
+    letter-spacing: var(--form-block-placeholder-text-font-letter-spacing) !important;
+    text-transform: var(--form-block-placeholder-text-font-text-transform) !important;
+    font-style: var(--form-block-placeholder-text-font-font-style) !important;
+  }
+
+  #list-section-search-bar::-moz-placeholder {
+    opacity: 1 !important;
+    color: hsla(var(--dynamic-input-text-color-hsl, var(--fallback-black-hsl)), calc(var(--dynamic-input-text-color-a, 1) * 0.55));
+    font-weight: var(--form-block-placeholder-text-font-font-weight) !important;
+    font-family: var(--form-block-placeholder-text-font-font-family) !important;
+    font-size: calc(var(--form-block-placeholder-text-font-font-size-value)* 1rem) !important;
+    line-height: var(--form-block-placeholder-text-font-line-height) !important;
+    letter-spacing: var(--form-block-placeholder-text-font-letter-spacing) !important;
+    text-transform: var(--form-block-placeholder-text-font-text-transform) !important;
+    font-style: var(--form-block-placeholder-text-font-font-style) !important;
+  }
+
+  #list-section-search-bar::-ms-input-placeholder {
+    opacity: 1 !important;
+    color: hsla(var(--dynamic-input-text-color-hsl, var(--fallback-black-hsl)), calc(var(--dynamic-input-text-color-a, 1) * 0.55));
+    font-weight: var(--form-block-placeholder-text-font-font-weight) !important;
+    font-family: var(--form-block-placeholder-text-font-font-family) !important;
+    font-size: calc(var(--form-block-placeholder-text-font-font-size-value)* 1rem) !important;
+    line-height: var(--form-block-placeholder-text-font-line-height) !important;
+    letter-spacing: var(--form-block-placeholder-text-font-letter-spacing) !important;
+    text-transform: var(--form-block-placeholder-text-font-text-transform) !important;
+    font-style: var(--form-block-placeholder-text-font-font-style) !important;
+  }
+
   #list-section-search-bar::placeholder {
     opacity: 1 !important;
     color: hsla(var(--dynamic-input-text-color-hsl, var(--fallback-black-hsl)), calc(var(--dynamic-input-text-color-a, 1) * 0.55));
@@ -69,6 +105,7 @@
   }
   
   #list-section-select-bar {
+    box-sizing: border-box;
     width: 100%;
     appearance: none;
     -webkit-appearance: none;
