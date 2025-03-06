@@ -73,12 +73,6 @@ function initialiseListSectionFilters() {
                 formStylings.innerHTML = '<span class="form-input-effects-border"></span>';
                 // Adding the form styling to the category select wrapper
                 categoriesInner.appendChild(formStylings);
-                // Creating the dropdown icon and adding it's SVG 
-                let dropdownIconWrapper = document.createElement('div');
-                dropdownIconWrapper.classList.add('iTbflA_rDv9UY9yGCeTs');
-                dropdownIconWrapper.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="12"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.439453 1.49825L1.56057 0.501709L9.00001 8.87108L16.4395 0.501709L17.5606 1.49825L9.00001 11.1289L0.439453 1.49825Z"></path></svg>';
-                // Adding the dropdown icon to the category select inner
-                categoriesInner.appendChild(dropdownIconWrapper);
                 // Adding the category select wrapper to the filter wrapper
                 filterWrapper.appendChild(categoriesWrapper);
             }
