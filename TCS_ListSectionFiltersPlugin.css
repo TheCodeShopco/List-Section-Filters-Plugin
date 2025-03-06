@@ -38,6 +38,7 @@
   }
   
   #list-section-search-bar::placeholder {
+    opacity: 1 !important;
     color: hsla(var(--dynamic-input-text-color-hsl, var(--fallback-black-hsl)), calc(var(--dynamic-input-text-color-a, 1) * 0.55));
     font-weight: var(--form-block-placeholder-text-font-font-weight) !important;
     font-family: var(--form-block-placeholder-text-font-font-family) !important;
@@ -82,7 +83,8 @@
   }
   
   #list-section-select-bar::placeholder {
-    color: hsla(var(--dynamic-input-text-color-hsl, var(--fallback-black-hsl)), calc(var(--dynamic-input-text-color-a, 1) * 0.55));
+    opacity: 1 !important;
+    color: hsla(var(--dynamic-input-text-color-hsl, var(--fallback-black-hsl)), calc(var(--dynamic-input-text-color-a, 1) * 0.55)) importat !important;
     font-weight: var(--form-block-placeholder-text-font-font-weight) !important;
     font-family: var(--form-block-placeholder-text-font-font-family) !important;
     font-size: calc(var(--form-block-placeholder-text-font-font-size-value)* 1rem) !important;
