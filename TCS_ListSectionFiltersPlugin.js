@@ -65,7 +65,7 @@ function initialiseListSectionFilters() {
                 formStylings.classList.add('form-input-effects');
                 formStylings.innerHTML = '<span class="form-input-effects-border"></span>';
                 // Adding the form styling to the category select wrapper
-                categoriesInner.appendChild(formStylings);
+                categoriesWrapper.appendChild(formStylings);
                 // Adding the category select wrapper to the filter wrapper
                 filterWrapper.appendChild(categoriesWrapper);
             }
