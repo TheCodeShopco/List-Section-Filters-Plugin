@@ -24,12 +24,6 @@
     position: relative;
     flex-basis: 33%
   }
-
-  .VV2B_mgrsAfgCTMCqNKe {
-    align-items: center;
-    display: flex;
-    position: relative
-}
   
   #list-section-search-bar {
     color: var(--dynamic-input-text-color) !important;

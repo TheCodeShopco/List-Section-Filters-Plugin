@@ -27,7 +27,6 @@ function initialiseListSectionFilters() {
                 searchBar.type = 'text';
                 searchBar.placeholder = 'Search items...';
                 searchBar.id = 'list-section-search-bar';
-                searchBar.classList.add('FTwKkU7x298MvypxZyde');
                 searchBar.addEventListener('input', filterListSection);
                 // Creating the search bar wrapper and adding its classes and id
                 let searchBarWrapper = document.createElement('div');
@@ -37,7 +36,7 @@ function initialiseListSectionFilters() {
                 searchBarWrapper.appendChild(searchBar);
                 // Creating the form styling div and adding its classes and inner elements
                 let formStylings = document.createElement('span');
-                formStylings.classList.add('form-input-effects', 'wlcGx2YcoCEPSUK91mkw');
+                formStylings.classList.add('form-input-effects');
                 formStylings.innerHTML = '<span class="form-input-effects-border"></span>';
                 // Adding the form styling to the search bar wrapper
                 searchBarWrapper.appendChild(formStylings);
@@ -49,7 +48,6 @@ function initialiseListSectionFilters() {
                 // Creating the categories select bar and adding its classes/event listener
                 let selectBar = document.createElement('select');
                 selectBar.id = 'list-section-select-bar';
-                selectBar.classList.add('XO2ScPLCQmVYnDoVT831');
                 selectBar.addEventListener('change', filterListSection);
                 // Creating the default option for the select bar
                 let defaultOption = document.createElement('option');
@@ -60,16 +58,11 @@ function initialiseListSectionFilters() {
                 let categoriesWrapper = document.createElement('div');
                 categoriesWrapper.id = "list-section-filters-categories-wrapper";
                 categoriesWrapper.classList.add('form-item', 'field', 'select');
-                // Creating the additional category select inner with its specific class
-                let categoriesInner = document.createElement('div');
-                categoriesInner.classList.add('VV2B_mgrsAfgCTMCqNKe');
-                // Adding the select bar to the category select inner
-                categoriesInner.appendChild(selectBar);
                 // Adding the category select inner to the category select wrapper
-                categoriesWrapper.appendChild(categoriesInner);
+                categoriesWrapper.appendChild(selectBar);
                 // Creating the form styling div and adding its classes and inner elements
                 let formStylings = document.createElement('span');
-                formStylings.classList.add('form-input-effects', 'wlcGx2YcoCEPSUK91mkw');
+                formStylings.classList.add('form-input-effects');
                 formStylings.innerHTML = '<span class="form-input-effects-border"></span>';
                 // Adding the form styling to the category select wrapper
                 categoriesInner.appendChild(formStylings);
