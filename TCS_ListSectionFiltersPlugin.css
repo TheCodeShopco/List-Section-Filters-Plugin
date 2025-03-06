@@ -48,9 +48,24 @@
     text-transform: var(--form-block-placeholder-text-font-text-transform) !important;
     font-style: var(--form-block-placeholder-text-font-font-style) !important;
   }
+
+  .select-dropdown-icon {
+    cursor: pointer;
+    pointer-events: none;
+    width: 18px;
+    height: 12px;
+    position: absolute;
+    right: 10px;
+    color: var(--dynamic-input-text-color);
+  }
   
   #list-section-select-bar {
     width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    appearance: none;
+    -webkit-appearance: none;
     color: var(--dynamic-input-text-color) !important;
     font-weight: var(--form-block-select-dropdown-text-font-font-weight) !important;
     font-family: var(--form-block-select-dropdown-text-font-font-family) !important;

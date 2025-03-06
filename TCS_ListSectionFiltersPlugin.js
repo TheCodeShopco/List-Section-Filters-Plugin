@@ -60,6 +60,11 @@ function initialiseListSectionFilters() {
                 categoriesWrapper.classList.add('form-item', 'field', 'select');
                 // Adding the category select inner to the category select wrapper
                 categoriesWrapper.appendChild(selectBar);
+                // Creating the dropdown icon and adding it to the category select wrapper
+                let dropdownIcon = document.createElement('div');
+                dropdownIcon.classList.add('select-dropdown-icon');
+                dropdownIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="12"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.439453 1.49825L1.56057 0.501709L9.00001 8.87108L16.4395 0.501709L17.5606 1.49825L9.00001 11.1289L0.439453 1.49825Z"></path></svg>';
+                categoriesWrapper.appendChild(dropdownIcon);
                 // Creating the form styling div and adding its classes and inner elements
                 let formStylings = document.createElement('span');
                 formStylings.classList.add('form-input-effects');
