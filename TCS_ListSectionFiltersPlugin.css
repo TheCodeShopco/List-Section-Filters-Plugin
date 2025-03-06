@@ -49,6 +49,7 @@
   }
   
   #list-section-select-bar {
+    width: 100%;
     color: var(--dynamic-input-text-color) !important;
     font-weight: var(--form-block-select-dropdown-text-font-font-weight) !important;
     font-family: var(--form-block-select-dropdown-text-font-font-family) !important;
@@ -57,8 +58,6 @@
     letter-spacing: var(--form-block-select-dropdown-text-font-letter-spacing) !important;
     text-transform: var(--form-block-select-dropdown-text-font-text-transform) !important;
     font-style: var(--form-block-select-dropdown-text-font-font-style) !important;
-
-    width: 100%;
   }
   
   #list-section-select-bar::placeholder {
