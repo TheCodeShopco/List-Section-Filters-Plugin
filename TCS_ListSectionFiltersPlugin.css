@@ -57,6 +57,8 @@
     letter-spacing: var(--form-block-select-dropdown-text-font-letter-spacing) !important;
     text-transform: var(--form-block-select-dropdown-text-font-text-transform) !important;
     font-style: var(--form-block-select-dropdown-text-font-font-style) !important;
+
+    width: 100%;
   }
   
   #list-section-select-bar::placeholder {
