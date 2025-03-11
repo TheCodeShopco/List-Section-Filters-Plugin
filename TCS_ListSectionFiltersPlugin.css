@@ -38,8 +38,6 @@
   }
 
   #list-section-search-bar::placeholder {
-    opacity: 0.55 !important;
-    color: var(--dynamic-input-text-color) !important;
     font-weight: var(--form-block-placeholder-text-font-font-weight) !important;
     font-family: var(--form-block-placeholder-text-font-font-family) !important;
     font-size: calc(var(--form-block-placeholder-text-font-font-size-value)* 1rem) !important;
