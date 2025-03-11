@@ -24,8 +24,13 @@
     position: relative;
     flex-basis: 33%
   }
+
+  #list-section-filters-search-bar-wrapper {
+    display: grid;
+  }
   
   #list-section-search-bar {
+    box-sizing: border-box;
     width: 100%;
     color: var(--dynamic-input-text-color) !important;
     font-weight: var(--form-block-input-text-font-font-weight) !important;
@@ -62,6 +67,7 @@
     position: absolute;
     right: calc(var(--form-field-border-thickness) + var(--form-field-padding-horizontal));
     color: var(--dynamic-input-text-color);
+    z-index: 1;
   }
 
   .select-dropdown-icon svg {
