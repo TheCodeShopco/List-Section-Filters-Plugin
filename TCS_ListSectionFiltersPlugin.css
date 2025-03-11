@@ -100,3 +100,11 @@
     text-transform: var(--form-block-placeholder-text-font-text-transform) !important;
     font-style: var(--form-block-placeholder-text-font-font-style) !important;
   }
+
+  #list-section-select-bar option {
+    background: hsla(var(--dynamic-fill-color-hsl, var(--fallback-white-hsl)), calc(var(--dynamic-fill-color-a, 1) * var(--solid-alpha-modifier)));
+  }
+
+  #list-section-select-bar option:hover {
+    background: var(--dynamic-fill-color-hsl);
+  }
