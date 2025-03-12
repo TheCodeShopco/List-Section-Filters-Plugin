@@ -1,3 +1,16 @@
+section:has(#list-section-filter-wrapper) .list-item {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+section:has(#list-section-filter-wrapper) .list-item.visible {
+  opacity: 1 !important;
+}
+
+section:has(#list-section-filter-wrapper) .list-item.hidden {
+    display: none;
+}
+
 #list-section-filter-wrapper {
     display: flex;
     flex-wrap: wrap;

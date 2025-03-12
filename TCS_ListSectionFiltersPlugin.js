@@ -117,6 +117,7 @@ function initialiseListSectionFilters() {
                 let listItem = description.closest('.list-item');
                 if (listItem) {
                     listItem.setAttribute('data-category', category);
+                    listItem.classList.add('visible');
                 }
                 // Remove the category from the description text
                 description.innerText = text.replace(categoryMatch[0], '');
@@ -167,11 +168,19 @@ function initialiseListSectionFilters() {
             const matchesSearch = searchBar ? (itemName.includes(searchQuery) || itemDescription.includes(searchQuery)) : true;
             const matchesCategory = selectBar ? (categoryQuery === 'all' || itemCategory === categoryQuery) : true;
 
-            if (matchesSearch && matchesCategory) {
-                item.style.display = 'block';
-            } else {
-                item.style.display = 'none';
-            }
+            item.classList.remove('visible');
+            setTimeout(() => {
+                item.classList.add('hidden');
+            }, 250);
+            
+            setTimeout(() => {
+                if (matchesSearch && matchesCategory) {
+                    item.classList.remove('hidden');
+                    setTimeout(() => {
+                        item.classList.add('visible');
+                    }, 10);
+                }
+            }, 250);
         });
     }
 
