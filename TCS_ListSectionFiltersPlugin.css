@@ -11,12 +11,31 @@ section:has(#list-section-filter-wrapper) .list-item.hidden {
     display: none;
 }
 
+section:has(#list-section-filter-wrapper) .user-items-list {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
 #list-section-filter-wrapper {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     margin-left: var(--sqs-site-gutter);
     margin-right: var(--sqs-site-gutter);
+    order: 2;
+  }
+
+  .list-section-title {
+    order: 1;
+  }
+
+  .user-items-list-item-container {
+    order: 3;
+  }
+  
+  .list-section-button-container {
+    order: 4;
   }
   
   @media (max-width: 768px) {
@@ -27,6 +46,7 @@ section:has(#list-section-filter-wrapper) .list-item.hidden {
   
   #list-section-filter-wrapper.inset {
     max-width: var(--sqs-site-max-width);
+    width: 100%;
     margin-top: 0;
     margin-right: auto;
     margin-left: auto;
