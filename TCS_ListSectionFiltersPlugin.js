@@ -106,27 +106,32 @@ function initialiseListSectionFilters() {
         let listItemDescriptions = listSection.querySelectorAll('.list-item-content__description p');
         // Iterating over the descriptions
         listItemDescriptions.forEach(description => {
-            // Finding the category from the description text, looking for the text '#category/'
+            // Finding all categories from the description text, looking for the text '#category/'
             let text = description.innerText;
-            let categoryMatch = text.match(/#category\/([^\/]*)\//);
-            // If a category is found
-            if (categoryMatch) {
-                // Add the category to a variable
-                let category = categoryMatch[1];
-                // Add the category to an attribute of the list item
+            let categoryMatches = text.match(/#category\/([^ ]+)/g);
+            // If categories are found
+            if (categoryMatches) {
                 let listItem = description.closest('.list-item');
+                let itemCategories = [];
+                categoryMatches.forEach(match => {
+                    // Extract the category name
+                    let category = match.replace('#category/', '');
+                    // Add the category to the list of item categories
+                    itemCategories.push(category);
+                    // If the category isn't in the global list, add it
+                    if (!categories.includes(category)) {
+                        categories.push(category);
+                    }
+                });
+                // Add all categories to the 'data-category' attribute of the list item
                 if (listItem) {
-                    listItem.setAttribute('data-category', category);
+                    listItem.setAttribute('data-category', itemCategories.join(','));
                     listItem.classList.add('visible');
                 }
-                // Remove the category from the description text
-                description.innerText = text.replace(categoryMatch[0], '');
-                if (description.innerText.trim() === '') {
+                // Remove all category tags from the description text
+                description.innerText = text.replace(/#category\/[^ ]+/g, '').trim();
+                if (description.innerText === '') {
                     description.remove();
-                }
-                // If the category isnt in the list, add it to the category list
-                if (!categories.includes(category)) {
-                    categories.push(category);
                 }
             }
         });
@@ -159,14 +164,14 @@ function initialiseListSectionFilters() {
 
         let listItems = listSection.querySelectorAll('.list-item');
 
-        // Iterating over the list items and hiding them if they dont match the search criteria
+        // Iterating over the list items and hiding them if they don't match the search criteria
         listItems.forEach(item => {
             let itemName = item.querySelector('.list-item-content__title').innerText.toLowerCase();
             let itemDescription = item.querySelector('.list-item-content__description').innerText.toLowerCase();
             let itemCategory = item.getAttribute('data-category');
 
             const matchesSearch = searchBar ? (itemName.includes(searchQuery) || itemDescription.includes(searchQuery)) : true;
-            const matchesCategory = selectBar ? (categoryQuery === 'all' || itemCategory === categoryQuery) : true;
+            const matchesCategory = selectBar ? (categoryQuery === 'all' || (itemCategory && itemCategory.split(',').includes(categoryQuery))) : true;
 
             item.classList.remove('visible');
             setTimeout(() => {
