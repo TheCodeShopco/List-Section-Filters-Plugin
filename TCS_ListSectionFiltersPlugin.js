@@ -128,7 +128,8 @@ function initialiseListSectionFilters() {
                 }
 
                 // Add unique categories to the categories array
-                categoryList.forEach(category => {
+                categoryMatches.forEach(match => {
+                    let category = match.match(/#category\/([^\/]*)\//)[1];
                     if (!categories.includes(category)) {
                         categories.push(category);
                     }
