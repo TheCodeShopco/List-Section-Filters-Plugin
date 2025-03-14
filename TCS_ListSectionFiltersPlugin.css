@@ -15,7 +15,6 @@ section:has(#list-section-filter-wrapper) .list-item.hidden {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    margin-bottom: 4rem;
     margin-left: var(--sqs-site-gutter);
     margin-right: var(--sqs-site-gutter);
   }
@@ -28,7 +27,9 @@ section:has(#list-section-filter-wrapper) .list-item.hidden {
   
   #list-section-filter-wrapper.inset {
     max-width: var(--sqs-site-max-width);
-    margin: 0 auto 4rem auto !important;
+    margin-top: 0;
+    margin-right: auto;
+    margin-left: auto;
     padding-left: var(--sqs-site-gutter);
     padding-right: var(--sqs-site-gutter);
   }
@@ -88,6 +89,7 @@ section:has(#list-section-filter-wrapper) .list-item.hidden {
   }
   
   #list-section-select-bar {
+    cursor: pointer;
     box-sizing: border-box;
     width: 100%;
     appearance: none;
