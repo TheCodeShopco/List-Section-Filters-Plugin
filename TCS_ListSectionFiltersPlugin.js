@@ -181,7 +181,14 @@ function initialiseListSectionFilters() {
             let itemDescription = item.querySelector('.list-item-content__description').innerText.toLowerCase();
             let itemCategories = item.getAttribute('data-category') ? item.getAttribute('data-category').split(',') : [];
 
-            const matchesSearch = searchBar ? (itemName.includes(searchQuery) || itemDescription.includes(searchQuery)) : true;
+            // Check if the search query matches the name, description, or any category
+            const matchesSearch = searchBar ? (
+            itemName.includes(searchQuery) ||
+            itemDescription.includes(searchQuery) ||
+            itemCategories.some(category => category.toLowerCase().includes(searchQuery))
+            ) : true;
+
+            // Check if the item matches the selected category
             const matchesCategory = selectBar ? (categoryQuery === 'all' || itemCategories.includes(categoryQuery)) : true;
 
             item.classList.remove('visible');
