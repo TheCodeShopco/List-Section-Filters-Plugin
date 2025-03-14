@@ -117,7 +117,17 @@ function initialiseListSectionFilters() {
                 if (listItem) {
                     // Extract category names and assign them as a comma-separated list
                     let categoryList = categoryMatches.map(match => match.match(/#category\/([^\/]*)\//)[1]);
-                    listItem.setAttribute('data-category', categoryList.join(','));
+                    
+                    // Get existing categories from the data-category attribute
+                    let existingCategories = listItem.getAttribute('data-category');
+                    let existingCategoryList = existingCategories ? existingCategories.split(',') : [];
+
+                    // Combine existing categories with the new ones, avoiding duplicates
+                    let combinedCategories = [...new Set([...existingCategoryList, ...categoryList])];
+
+                    // Update the data-category attribute
+                    listItem.setAttribute('data-category', combinedCategories.join(','));
+                    
                     listItem.classList.add('visible');
                 }
 
