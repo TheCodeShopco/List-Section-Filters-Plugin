@@ -27,7 +27,7 @@ function initialiseListSectionFilters() {
                 searchBar.type = 'text';
                 searchBar.placeholder = 'Search items...';
                 searchBar.id = 'list-section-search-bar';
-                searchBar.addEventListener('input', filterListSection);
+                searchBar.addEventListener('input', updateListSection);
                 // Creating the search bar wrapper and adding its classes and id
                 let searchBarWrapper = document.createElement('div');
                 searchBarWrapper.id = "list-section-filters-search-bar-wrapper";
@@ -48,7 +48,7 @@ function initialiseListSectionFilters() {
                 // Creating the categories select bar and adding its classes/event listener
                 let selectBar = document.createElement('select');
                 selectBar.id = 'list-section-select-bar';
-                selectBar.addEventListener('change', filterListSection);
+                selectBar.addEventListener('change', updateListSection);
                 // Creating the default option for the select bar
                 let defaultOption = document.createElement('option');
                 defaultOption.value = 'all';
@@ -78,7 +78,7 @@ function initialiseListSectionFilters() {
                 // Creating the categories select bar and adding its classes/event listener
                 let selectBar = document.createElement('select');
                 selectBar.id = 'list-section-sorting-bar';
-                selectBar.addEventListener('change', sortListSection);
+                selectBar.addEventListener('change', updateListSection);
                 // Creating the default option for the select bar
                 let defaultOption = document.createElement('option');
                 defaultOption.value = 'none';
@@ -232,15 +232,53 @@ function initialiseListSectionFilters() {
         });
     }
 
-    function sortListSection() {
+    function updateListSection() {
         let listSection = findListSection();
         if (!listSection) return;
     
+        let searchBar = document.querySelector('#list-section-search-bar');
+        let selectBar = document.querySelector('#list-section-select-bar');
         let sortingBar = document.querySelector('#list-section-sorting-bar');
-        if (!sortingBar) return;
     
-        let sortOption = sortingBar.value; // Get the selected sorting option
+        // Get the current values of the filters
+        let searchQuery = searchBar ? searchBar.value.toLowerCase() : '';
+        let categoryQuery = selectBar ? selectBar.value : 'all';
+        let sortOption = sortingBar ? sortingBar.value : 'none';
+    
         let listItems = Array.from(listSection.querySelectorAll('.list-item')); // Convert NodeList to Array
+    
+        // Filter the list items based on the search and category filters
+        let filteredItems = listItems.filter(item => {
+            let itemName = item.querySelector('.list-item-content__title').innerText.toLowerCase();
+            let itemDescription = item.querySelector('.list-item-content__description').innerText.toLowerCase();
+            let itemCategories = item.getAttribute('data-category') ? item.getAttribute('data-category').split(',') : [];
+    
+            // Check if the search query matches the name, description, or any category
+            const matchesSearch = searchBar ? (
+                itemName.includes(searchQuery) ||
+                itemDescription.includes(searchQuery) ||
+                itemCategories.some(category => category.toLowerCase().includes(searchQuery))
+            ) : true;
+    
+            // Check if the item matches the selected category
+            const matchesCategory = selectBar ? (categoryQuery === 'all' || itemCategories.includes(categoryQuery)) : true;
+    
+            return matchesSearch && matchesCategory;
+        });
+    
+        // Sort the filtered items based on the selected sorting option
+        filteredItems.sort((a, b) => {
+            let titleA = a.querySelector('.list-item-content__title').innerText.toLowerCase();
+            let titleB = b.querySelector('.list-item-content__title').innerText.toLowerCase();
+    
+            if (sortOption === 'a-z') {
+                return titleA.localeCompare(titleB); // Sort A-Z
+            } else if (sortOption === 'z-a') {
+                return titleB.localeCompare(titleA); // Sort Z-A
+            } else {
+                return 0; // No sorting
+            }
+        });
     
         // Temporarily hide all items for smooth animation
         listItems.forEach(item => {
@@ -250,81 +288,22 @@ function initialiseListSectionFilters() {
             }, 250);
         });
     
-        // Sort the list items based on the selected option
+        // Clear the current list and append the filtered and sorted items
         setTimeout(() => {
-            listItems.sort((a, b) => {
-                let titleA = a.querySelector('.list-item-content__title').innerText.toLowerCase();
-                let titleB = b.querySelector('.list-item-content__title').innerText.toLowerCase();
-    
-                if (sortOption === 'a-z') {
-                    return titleA.localeCompare(titleB); // Sort A-Z
-                } else if (sortOption === 'z-a') {
-                    return titleB.localeCompare(titleA); // Sort Z-A
-                } else {
-                    return 0; // No sorting
-                }
-            });
-    
-            // Clear the current list and append the sorted items
             let listContainer = listSection.querySelector('.user-items-list ul');
             if (listContainer) {
                 listContainer.innerHTML = ''; // Clear the list
-                listItems.forEach(item => listContainer.appendChild(item)); // Append sorted items
+                filteredItems.forEach(item => listContainer.appendChild(item)); // Append filtered and sorted items
             }
     
             // Reapply the visible class for smooth animation
-            listItems.forEach(item => {
+            filteredItems.forEach(item => {
                 item.classList.remove('hidden');
                 setTimeout(() => {
                     item.classList.add('visible');
                 }, 10);
             });
-        }, 250); // Wait for the hiding animation to complete before sorting
-    }
-
-    // Event listener function to filter the section based on the search bar and/or select bar
-
-    function filterListSection() {
-        let listSection = findListSection();
-        let searchBar = document.querySelector('#list-section-search-bar');
-        let selectBar = document.querySelector('#list-section-select-bar');
-
-        // Finding the values of the search and category bars
-        let searchQuery = searchBar ? searchBar.value.toLowerCase() : '';
-        let categoryQuery = selectBar ? selectBar.value : 'all';
-
-        let listItems = listSection.querySelectorAll('.list-item');
-
-        // Iterating over the list items and hiding them if they dont match the search criteria
-        listItems.forEach(item => {
-            let itemName = item.querySelector('.list-item-content__title').innerText.toLowerCase();
-            let itemDescription = item.querySelector('.list-item-content__description').innerText.toLowerCase();
-            let itemCategories = item.getAttribute('data-category') ? item.getAttribute('data-category').split(',') : [];
-
-            // Check if the search query matches the name, description, or any category
-            const matchesSearch = searchBar ? (
-            itemName.includes(searchQuery) ||
-            itemDescription.includes(searchQuery) ||
-            itemCategories.some(category => category.toLowerCase().includes(searchQuery))
-            ) : true;
-
-            // Check if the item matches the selected category
-            const matchesCategory = selectBar ? (categoryQuery === 'all' || itemCategories.includes(categoryQuery)) : true;
-
-            item.classList.remove('visible');
-            setTimeout(() => {
-                item.classList.add('hidden');
-            }, 250);
-            
-            setTimeout(() => {
-                if (matchesSearch && matchesCategory) {
-                    item.classList.remove('hidden');
-                    setTimeout(() => {
-                        item.classList.add('visible');
-                    }, 10);
-                }
-            }, 250);
-        });
+        }, 250); // Wait for the hiding animation to complete before updating the list
     }
 
      // Running all the functions in the right order 
