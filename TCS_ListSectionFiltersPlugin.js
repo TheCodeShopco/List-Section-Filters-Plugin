@@ -276,13 +276,13 @@ function initialiseListSectionFilters() {
                             item.classList.remove('hidden');
                             setTimeout(() => {
                                 item.classList.add('visible');
-                            }, 50);
+                            }, 10);
                         }
                     }, 250);
                 });
     
                 // Resolve the promise after the filtering animations are complete
-                setTimeout(resolve, 350); // Ensure all animations are complete
+                setTimeout(resolve, 10); // Ensure all animations are complete
             });
         };
     
