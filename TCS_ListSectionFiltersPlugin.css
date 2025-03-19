@@ -56,7 +56,7 @@ section:has(#list-section-filter-wrapper) .user-items-list {
   
   #list-section-filters-search-bar-wrapper, #list-section-filters-categories-wrapper, #list-section-filters-sorting-wrapper {
     position: relative;
-    flex-basis: 33%
+    flex-basis: 22%
   }
 
   #list-section-filters-search-bar-wrapper {
