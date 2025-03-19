@@ -248,40 +248,46 @@ function initialiseListSectionFilters() {
         let listItems = Array.from(listSection.querySelectorAll('.list-item')); // Convert NodeList to Array
     
         // Filter the list items based on the search and category filters
-        listItems.forEach(item => {
-            let itemName = item.querySelector('.list-item-content__title').innerText.toLowerCase();
-            let itemDescription = item.querySelector('.list-item-content__description').innerText.toLowerCase();
-            let itemCategories = item.getAttribute('data-category') ? item.getAttribute('data-category').split(',') : [];
+        const filterItems = () => {
+            return new Promise(resolve => {
+                listItems.forEach(item => {
+                    let itemName = item.querySelector('.list-item-content__title').innerText.toLowerCase();
+                    let itemDescription = item.querySelector('.list-item-content__description').innerText.toLowerCase();
+                    let itemCategories = item.getAttribute('data-category') ? item.getAttribute('data-category').split(',') : [];
     
-            // Check if the search query matches the name, description, or any category
-            const matchesSearch = !searchQuery || (
-                itemName.includes(searchQuery) ||
-                itemDescription.includes(searchQuery) ||
-                itemCategories.some(category => category.toLowerCase().includes(searchQuery))
-            );
+                    // Check if the search query matches the name, description, or any category
+                    const matchesSearch = !searchQuery || (
+                        itemName.includes(searchQuery) ||
+                        itemDescription.includes(searchQuery) ||
+                        itemCategories.some(category => category.toLowerCase().includes(searchQuery))
+                    );
     
-            // Check if the item matches the selected category
-            const matchesCategory = categoryQuery === 'all' || itemCategories.includes(categoryQuery);
+                    // Check if the item matches the selected category
+                    const matchesCategory = categoryQuery === 'all' || itemCategories.includes(categoryQuery);
     
-            // Toggle visibility based on filters with smooth animation
-            item.classList.remove('visible');
-            setTimeout(() => {
-                item.classList.add('hidden');
-            }, 250);
-    
-            setTimeout(() => {
-                if (matchesSearch && matchesCategory) {
-                    item.classList.remove('hidden');
+                    // Toggle visibility based on filters with smooth animation
+                    item.classList.remove('visible');
                     setTimeout(() => {
-                        item.classList.add('visible');
-                    }, 10);
-                }
-            }, 250);
-        });
+                        item.classList.add('hidden');
+                    }, 250);
     
-        // Delay sorting to ensure filtering is complete
-        setTimeout(() => {
-            // Sort the visible items based on the selected sorting option
+                    setTimeout(() => {
+                        if (matchesSearch && matchesCategory) {
+                            item.classList.remove('hidden');
+                            setTimeout(() => {
+                                item.classList.add('visible');
+                            }, 10);
+                        }
+                    }, 250);
+                });
+    
+                // Resolve the promise after the filtering animations are complete
+                setTimeout(resolve, 300); // Ensure all animations are complete
+            });
+        };
+    
+        // Sort the visible items based on the selected sorting option
+        const sortItems = () => {
             let visibleItems = listItems.filter(item => item.classList.contains('visible'));
             visibleItems.sort((a, b) => {
                 let titleA = a.querySelector('.list-item-content__title').innerText.toLowerCase();
@@ -303,7 +309,10 @@ function initialiseListSectionFilters() {
                     listContainer.appendChild(item); // Move each item to its new position
                 });
             }
-        }, 300); // Delay to ensure filtering is complete
+        };
+    
+        // Run the filtering and sorting in sequence
+        filterItems().then(sortItems);
     }
 
      // Running all the functions in the right order 
