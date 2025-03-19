@@ -89,8 +89,8 @@ function initialiseListSectionFilters() {
                 ascendingOption.innerText = 'Sort A-Z';
                 selectBar.appendChild(ascendingOption);
                 let descendingOption = document.createElement('option');
-                ascendingOption.value = 'z-a';
-                ascendingOption.innerText = 'Sort Z-A';
+                descendingOption.value = 'z-a';
+                descendingOption.innerText = 'Sort Z-A';
                 selectBar.appendChild(descendingOption);
                 // Creating the category select wrapper and adding its classes and id
                 let sortingWrapper = document.createElement('div');
