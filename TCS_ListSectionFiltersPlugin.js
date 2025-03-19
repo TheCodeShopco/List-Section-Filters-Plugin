@@ -74,6 +74,44 @@ function initialiseListSectionFilters() {
                 // Adding the category select wrapper to the filter wrapper
                 filterWrapper.appendChild(categoriesWrapper);
             }
+            if (targetBlock.getAttribute('data-sorting-enabled') === 'true') {
+                // Creating the categories select bar and adding its classes/event listener
+                let selectBar = document.createElement('select');
+                selectBar.id = 'list-section-sorting-bar';
+                selectBar.addEventListener('change', sortListSection);
+                // Creating the default option for the select bar
+                let defaultOption = document.createElement('option');
+                defaultOption.value = 'none';
+                defaultOption.innerText = 'Sort by...';
+                selectBar.appendChild(defaultOption);
+                let ascendingOption = document.createElement('option');
+                ascendingOption.value = 'a-z';
+                ascendingOption.innerText = 'Sort A-Z';
+                selectBar.appendChild(ascendingOption);
+                let descendingOption = document.createElement('option');
+                ascendingOption.value = 'z-a';
+                ascendingOption.innerText = 'Sort Z-A';
+                selectBar.appendChild(descendingOption);
+                // Creating the category select wrapper and adding its classes and id
+                let sortingWrapper = document.createElement('div');
+                sortingWrapper.id = "list-section-filters-sorting-wrapper";
+                sortingWrapper.classList.add('form-item', 'field', 'select');
+                // Adding the category select inner to the category select wrapper
+                sortingWrapper.appendChild(selectBar);
+                // Creating the dropdown icon and adding it to the category select wrapper
+                let dropdownIcon = document.createElement('div');
+                dropdownIcon.classList.add('select-dropdown-icon');
+                dropdownIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="12"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.439453 1.49825L1.56057 0.501709L9.00001 8.87108L16.4395 0.501709L17.5606 1.49825L9.00001 11.1289L0.439453 1.49825Z"></path></svg>';
+                sortingWrapper.appendChild(dropdownIcon);
+                // Creating the form styling div and adding its classes and inner elements
+                let formStylings = document.createElement('span');
+                formStylings.classList.add('form-input-effects');
+                formStylings.innerHTML = '<span class="form-input-effects-border"></span>';
+                // Adding the form styling to the category select wrapper
+                sortingWrapper.appendChild(formStylings);
+                // Adding the category select wrapper to the filter wrapper
+                filterWrapper.appendChild(sortingWrapper);
+            }
             // Adding the inset class if required
             listSection.querySelector('.user-items-list').insertBefore(filterWrapper, listSection.querySelector('.user-items-list').firstChild);
             if (listSection.querySelector('ul').getAttribute('data-layout-width') === 'inset') {
@@ -192,6 +230,56 @@ function initialiseListSectionFilters() {
             option.innerText = category;
             selectBar.appendChild(option);
         });
+    }
+
+    function sortListSection() {
+        let listSection = findListSection();
+        if (!listSection) return;
+    
+        let sortingBar = document.querySelector('#list-section-sorting-bar');
+        if (!sortingBar) return;
+    
+        let sortOption = sortingBar.value; // Get the selected sorting option
+        let listItems = Array.from(listSection.querySelectorAll('.list-item')); // Convert NodeList to Array
+    
+        // Temporarily hide all items for smooth animation
+        listItems.forEach(item => {
+            item.classList.remove('visible');
+            setTimeout(() => {
+                item.classList.add('hidden');
+            }, 250);
+        });
+    
+        // Sort the list items based on the selected option
+        setTimeout(() => {
+            listItems.sort((a, b) => {
+                let titleA = a.querySelector('.list-item-content__title').innerText.toLowerCase();
+                let titleB = b.querySelector('.list-item-content__title').innerText.toLowerCase();
+    
+                if (sortOption === 'a-z') {
+                    return titleA.localeCompare(titleB); // Sort A-Z
+                } else if (sortOption === 'z-a') {
+                    return titleB.localeCompare(titleA); // Sort Z-A
+                } else {
+                    return 0; // No sorting
+                }
+            });
+    
+            // Clear the current list and append the sorted items
+            let listContainer = listSection.querySelector('.user-items-list ul');
+            if (listContainer) {
+                listContainer.innerHTML = ''; // Clear the list
+                listItems.forEach(item => listContainer.appendChild(item)); // Append sorted items
+            }
+    
+            // Reapply the visible class for smooth animation
+            listItems.forEach(item => {
+                item.classList.remove('hidden');
+                setTimeout(() => {
+                    item.classList.add('visible');
+                }, 10);
+            });
+        }, 250); // Wait for the hiding animation to complete before sorting
     }
 
     // Event listener function to filter the section based on the search bar and/or select bar
