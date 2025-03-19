@@ -107,6 +107,10 @@ function initialiseListSectionFilters() {
         let categories = [];
         // Finding all the list item descriptions
         let listItemDescriptions = listSection.querySelectorAll('.list-item-content__description p');
+        // Check if the feature is enabled
+        let targetBlock = document.querySelector('#filtered-list-section');
+        let displayCategories = targetBlock && targetBlock.getAttribute('data-display-categories') === 'true';
+    
         // Iterating over the descriptions
         listItemDescriptions.forEach(description => {
             // Finding the category from the description text, looking for the text '#category/'
@@ -129,29 +133,31 @@ function initialiseListSectionFilters() {
                     // Update the data-category attribute
                     listItem.setAttribute('data-category', combinedCategories.join(','));
     
-                    // Add the '.list-item-categories' element to display categories
-                    let textWrapper = listItem.querySelector('.list-item-content__text-wrapper');
-                    if (textWrapper) {
-                        // Remove existing categories container if it exists
-                        let existingCategoriesContainer = textWrapper.querySelector('.list-item-categories');
-                        if (existingCategoriesContainer) {
-                            existingCategoriesContainer.remove();
+                    // Add the '.list-item-categories' element to display categories if enabled
+                    if (displayCategories) {
+                        let textWrapper = listItem.querySelector('.list-item-content__text-wrapper');
+                        if (textWrapper) {
+                            // Remove existing categories container if it exists
+                            let existingCategoriesContainer = textWrapper.querySelector('.list-item-categories');
+                            if (existingCategoriesContainer) {
+                                existingCategoriesContainer.remove();
+                            }
+    
+                            // Create the categories container
+                            let categoriesContainer = document.createElement('div');
+                            categoriesContainer.classList.add('list-item-categories');
+    
+                            // Add individual category elements
+                            combinedCategories.forEach(category => {
+                                let categoryElement = document.createElement('span');
+                                categoryElement.classList.add('list-item-category');
+                                categoryElement.innerText = category;
+                                categoriesContainer.appendChild(categoryElement);
+                            });
+    
+                            // Add the categories container as the first child of the text wrapper
+                            textWrapper.insertBefore(categoriesContainer, textWrapper.firstChild);
                         }
-    
-                        // Create the categories container
-                        let categoriesContainer = document.createElement('div');
-                        categoriesContainer.classList.add('list-item-categories');
-    
-                        // Add individual category elements
-                        combinedCategories.forEach(category => {
-                            let categoryElement = document.createElement('span');
-                            categoryElement.classList.add('list-item-category');
-                            categoryElement.innerText = category;
-                            categoriesContainer.appendChild(categoryElement);
-                        });
-    
-                        // Add the categories container as the first child of the text wrapper
-                        textWrapper.insertBefore(categoriesContainer, textWrapper.firstChild);
                     }
     
                     listItem.classList.add('visible');
