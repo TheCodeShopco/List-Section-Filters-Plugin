@@ -247,6 +247,12 @@ function initialiseListSectionFilters() {
     
         let listItems = Array.from(listSection.querySelectorAll('.list-item')); // Convert NodeList to Array
     
+        // Reset all items to visible before applying filters
+        listItems.forEach(item => {
+            item.classList.remove('hidden');
+            item.classList.add('visible');
+        });
+    
         // Filter the list items based on the search and category filters
         let filteredItems = listItems.filter(item => {
             let itemName = item.querySelector('.list-item-content__title').innerText.toLowerCase();
