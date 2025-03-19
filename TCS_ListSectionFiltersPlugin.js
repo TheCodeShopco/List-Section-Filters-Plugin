@@ -263,11 +263,12 @@ function initialiseListSectionFilters() {
             // Check if the item matches the selected category
             const matchesCategory = categoryQuery === 'all' || itemCategories.includes(categoryQuery);
     
+            // Toggle visibility based on filters with smooth animation
             item.classList.remove('visible');
             setTimeout(() => {
                 item.classList.add('hidden');
             }, 250);
-
+    
             setTimeout(() => {
                 if (matchesSearch && matchesCategory) {
                     item.classList.remove('hidden');
@@ -278,26 +279,31 @@ function initialiseListSectionFilters() {
             }, 250);
         });
     
-        // Sort the visible items based on the selected sorting option
-        let visibleItems = listItems.filter(item => item.classList.contains('visible'));
-        visibleItems.sort((a, b) => {
-            let titleA = a.querySelector('.list-item-content__title').innerText.toLowerCase();
-            let titleB = b.querySelector('.list-item-content__title').innerText.toLowerCase();
+        // Delay sorting to ensure filtering is complete
+        setTimeout(() => {
+            // Sort the visible items based on the selected sorting option
+            let visibleItems = listItems.filter(item => item.classList.contains('visible'));
+            visibleItems.sort((a, b) => {
+                let titleA = a.querySelector('.list-item-content__title').innerText.toLowerCase();
+                let titleB = b.querySelector('.list-item-content__title').innerText.toLowerCase();
     
-            if (sortOption === 'a-z') {
-                return titleA.localeCompare(titleB); // Sort A-Z
-            } else if (sortOption === 'z-a') {
-                return titleB.localeCompare(titleA); // Sort Z-A
-            } else {
-                return 0; // No sorting
+                if (sortOption === 'a-z') {
+                    return titleA.localeCompare(titleB); // Sort A-Z
+                } else if (sortOption === 'z-a') {
+                    return titleB.localeCompare(titleA); // Sort Z-A
+                } else {
+                    return 0; // No sorting
+                }
+            });
+    
+            // Reorder the DOM to reflect the sorted order without clearing it
+            let listContainer = listSection.querySelector('.user-items-list ul');
+            if (listContainer) {
+                visibleItems.forEach(item => {
+                    listContainer.appendChild(item); // Move each item to its new position
+                });
             }
-        });
-    
-        // Reorder the DOM to reflect the sorted order
-        let listContainer = listSection.querySelector('.user-items-list ul');
-        if (listContainer) {
-            visibleItems.forEach(item => listContainer.appendChild(item)); // Append sorted items in the correct order
-        }
+        }, 300); // Delay to ensure filtering is complete
     }
 
      // Running all the functions in the right order 
