@@ -263,14 +263,19 @@ function initialiseListSectionFilters() {
             // Check if the item matches the selected category
             const matchesCategory = categoryQuery === 'all' || itemCategories.includes(categoryQuery);
     
-            // Toggle visibility based on filters with smooth animation
-            if (matchesSearch && matchesCategory) {
-                item.classList.remove('hidden');
-                setTimeout(() => item.classList.add('visible'), 10); // Add visible after a slight delay
-            } else {
-                item.classList.remove('visible');
-                setTimeout(() => item.classList.add('hidden'), 250); // Add hidden after fade-out
-            }
+            item.classList.remove('visible');
+            setTimeout(() => {
+                item.classList.add('hidden');
+            }, 250);
+
+            setTimeout(() => {
+                if (matchesSearch && matchesCategory) {
+                    item.classList.remove('hidden');
+                    setTimeout(() => {
+                        item.classList.add('visible');
+                    }, 10);
+                }
+            }, 250);
         });
     
         // Sort the visible items based on the selected sorting option
