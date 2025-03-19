@@ -79,6 +79,7 @@ function initialiseListSectionFilters() {
             if (listSection.querySelector('ul').getAttribute('data-layout-width') === 'inset') {
                 filterWrapper.classList.add('inset');
             }
+            
             // Aligning the components depending on user selection
             let alignment = targetBlock.getAttribute('data-horizontal-alignment');
             switch (alignment) {
@@ -121,22 +122,47 @@ function initialiseListSectionFilters() {
                     // Get existing categories from the data-category attribute
                     let existingCategories = listItem.getAttribute('data-category');
                     let existingCategoryList = existingCategories ? existingCategories.split(',') : [];
-
+    
                     // Combine existing categories with the new ones, avoiding duplicates
                     let combinedCategories = [...new Set([...existingCategoryList, ...categoryList])];
-
+    
                     // Update the data-category attribute
                     listItem.setAttribute('data-category', combinedCategories.join(','));
-                    
+    
+                    // Add the '.list-item-categories' element to display categories
+                    let textWrapper = listItem.querySelector('.list-item-content__text-wrapper');
+                    if (textWrapper) {
+                        // Remove existing categories container if it exists
+                        let existingCategoriesContainer = textWrapper.querySelector('.list-item-categories');
+                        if (existingCategoriesContainer) {
+                            existingCategoriesContainer.remove();
+                        }
+    
+                        // Create the categories container
+                        let categoriesContainer = document.createElement('div');
+                        categoriesContainer.classList.add('list-item-categories');
+    
+                        // Add individual category elements
+                        combinedCategories.forEach(category => {
+                            let categoryElement = document.createElement('span');
+                            categoryElement.classList.add('list-item-category');
+                            categoryElement.innerText = category;
+                            categoriesContainer.appendChild(categoryElement);
+                        });
+    
+                        // Add the categories container as the first child of the text wrapper
+                        textWrapper.insertBefore(categoriesContainer, textWrapper.firstChild);
+                    }
+    
                     listItem.classList.add('visible');
                 }
-
+    
                 // Remove all category tags from the description text
-                 description.innerText = text.replace(/#category\/([^\/]*)\//g, '');
+                description.innerText = text.replace(/#category\/([^\/]*)\//g, '');
                 if (description.innerText.trim() === '') {
                     description.remove();
                 }
-
+    
                 // Add unique categories to the categories array
                 categoryMatches.forEach(match => {
                     let category = match.match(/#category\/([^\/]*)\//)[1];
