@@ -282,7 +282,7 @@ function initialiseListSectionFilters() {
                 });
     
                 // Resolve the promise after the filtering animations are complete
-                setTimeout(resolve, 10); // Ensure all animations are complete
+                setTimeout(resolve, 250); // Ensure all animations are complete
             });
         };
     
