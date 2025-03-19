@@ -241,7 +241,7 @@ function initialiseListSectionFilters() {
         let sortingBar = document.querySelector('#list-section-sorting-bar');
     
         // Get the current values of the filters
-        let searchQuery = searchBar ? searchBar.value.toLowerCase() : '';
+        let searchQuery = searchBar ? searchBar.value.toLowerCase().trim() : '';
         let categoryQuery = selectBar ? selectBar.value : 'all';
         let sortOption = sortingBar ? sortingBar.value : 'none';
     
@@ -254,14 +254,14 @@ function initialiseListSectionFilters() {
             let itemCategories = item.getAttribute('data-category') ? item.getAttribute('data-category').split(',') : [];
     
             // Check if the search query matches the name, description, or any category
-            const matchesSearch = searchBar ? (
+            const matchesSearch = !searchQuery || (
                 itemName.includes(searchQuery) ||
                 itemDescription.includes(searchQuery) ||
                 itemCategories.some(category => category.toLowerCase().includes(searchQuery))
-            ) : true;
+            );
     
             // Check if the item matches the selected category
-            const matchesCategory = selectBar ? (categoryQuery === 'all' || itemCategories.includes(categoryQuery)) : true;
+            const matchesCategory = categoryQuery === 'all' || itemCategories.includes(categoryQuery);
     
             return matchesSearch && matchesCategory;
         });
