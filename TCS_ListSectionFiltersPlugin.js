@@ -250,8 +250,7 @@ function initialiseListSectionFilters() {
         // Sort the visible items based on the selected sorting option
         const sortItems = () => {
             return new Promise(resolve => {
-                let visibleItems = listItems.filter(item => item.classList.contains('visible'));
-                visibleItems.sort((a, b) => {
+                listItems.sort((a, b) => {
                     let titleA = a.querySelector('.list-item-content__title').innerText.toLowerCase();
                     let titleB = b.querySelector('.list-item-content__title').innerText.toLowerCase();
     
@@ -267,7 +266,8 @@ function initialiseListSectionFilters() {
                 // Reorder the DOM to reflect the sorted order without clearing it
                 let listContainer = listSection.querySelector('.user-items-list ul');
                 if (listContainer) {
-                    visibleItems.forEach(item => {
+                    listItems.forEach(item => {
+                        item.classList.remove('visible');
                         listContainer.appendChild(item); // Move each item to its new position
                     });
                 }
@@ -295,7 +295,6 @@ function initialiseListSectionFilters() {
                 const matchesCategory = categoryQuery === 'all' || itemCategories.includes(categoryQuery);
     
                 // Toggle visibility based on filters with smooth animation
-                item.classList.remove('visible');
                 setTimeout(() => {
                     item.classList.add('hidden');
                 }, 250);
