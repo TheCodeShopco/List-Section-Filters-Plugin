@@ -17,6 +17,12 @@ section:has(#list-section-filter-wrapper) .user-items-list {
   align-items: stretch;
 }
 
+.list-item-categories {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
 #list-section-filter-wrapper {
     display: flex;
     flex-wrap: wrap;
