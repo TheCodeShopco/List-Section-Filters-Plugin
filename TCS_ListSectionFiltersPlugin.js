@@ -247,72 +247,72 @@ function initialiseListSectionFilters() {
     
         let listItems = Array.from(listSection.querySelectorAll('.list-item')); // Convert NodeList to Array
     
-        // Filter the list items based on the search and category filters
-        const filterItems = () => {
-            return new Promise(resolve => {
-                listItems.forEach(item => {
-                    let itemName = item.querySelector('.list-item-content__title').innerText.toLowerCase();
-                    let itemDescription = item.querySelector('.list-item-content__description').innerText.toLowerCase();
-                    let itemCategories = item.getAttribute('data-category') ? item.getAttribute('data-category').split(',') : [];
-    
-                    // Check if the search query matches the name, description, or any category
-                    const matchesSearch = !searchQuery || (
-                        itemName.includes(searchQuery) ||
-                        itemDescription.includes(searchQuery) ||
-                        itemCategories.some(category => category.toLowerCase().includes(searchQuery))
-                    );
-    
-                    // Check if the item matches the selected category
-                    const matchesCategory = categoryQuery === 'all' || itemCategories.includes(categoryQuery);
-    
-                    // Toggle visibility based on filters with smooth animation
-                    item.classList.remove('visible');
-                    setTimeout(() => {
-                        item.classList.add('hidden');
-                    }, 250);
-    
-                    setTimeout(() => {
-                        if (matchesSearch && matchesCategory) {
-                            item.classList.remove('hidden');
-                            setTimeout(() => {
-                                item.classList.add('visible');
-                            }, 10);
-                        }
-                    }, 250);
-                });
-    
-                // Resolve the promise after the filtering animations are complete
-                setTimeout(resolve, 520); // Ensure all animations are complete
-            });
-        };
-    
         // Sort the visible items based on the selected sorting option
         const sortItems = () => {
-            let visibleItems = listItems.filter(item => item.classList.contains('visible'));
-            visibleItems.sort((a, b) => {
-                let titleA = a.querySelector('.list-item-content__title').innerText.toLowerCase();
-                let titleB = b.querySelector('.list-item-content__title').innerText.toLowerCase();
+            return new Promise(resolve => {
+                let visibleItems = listItems.filter(item => item.classList.contains('visible'));
+                visibleItems.sort((a, b) => {
+                    let titleA = a.querySelector('.list-item-content__title').innerText.toLowerCase();
+                    let titleB = b.querySelector('.list-item-content__title').innerText.toLowerCase();
     
-                if (sortOption === 'a-z') {
-                    return titleA.localeCompare(titleB); // Sort A-Z
-                } else if (sortOption === 'z-a') {
-                    return titleB.localeCompare(titleA); // Sort Z-A
-                } else {
-                    return 0; // No sorting
-                }
-            });
-    
-            // Reorder the DOM to reflect the sorted order without clearing it
-            let listContainer = listSection.querySelector('.user-items-list ul');
-            if (listContainer) {
-                visibleItems.forEach(item => {
-                    listContainer.appendChild(item); // Move each item to its new position
+                    if (sortOption === 'a-z') {
+                        return titleA.localeCompare(titleB); // Sort A-Z
+                    } else if (sortOption === 'z-a') {
+                        return titleB.localeCompare(titleA); // Sort Z-A
+                    } else {
+                        return 0; // No sorting
+                    }
                 });
-            }
+    
+                // Reorder the DOM to reflect the sorted order without clearing it
+                let listContainer = listSection.querySelector('.user-items-list ul');
+                if (listContainer) {
+                    visibleItems.forEach(item => {
+                        listContainer.appendChild(item); // Move each item to its new position
+                    });
+                }
+    
+                // Resolve the promise after sorting is complete
+                resolve();
+            });
         };
     
-        // Run the filtering and sorting in sequence
-        filterItems().then(sortItems);
+        // Filter the list items based on the search and category filters
+        const filterItems = () => {
+            listItems.forEach(item => {
+                let itemName = item.querySelector('.list-item-content__title').innerText.toLowerCase();
+                let itemDescription = item.querySelector('.list-item-content__description').innerText.toLowerCase();
+                let itemCategories = item.getAttribute('data-category') ? item.getAttribute('data-category').split(',') : [];
+    
+                // Check if the search query matches the name, description, or any category
+                const matchesSearch = !searchQuery || (
+                    itemName.includes(searchQuery) ||
+                    itemDescription.includes(searchQuery) ||
+                    itemCategories.some(category => category.toLowerCase().includes(searchQuery))
+                );
+    
+                // Check if the item matches the selected category
+                const matchesCategory = categoryQuery === 'all' || itemCategories.includes(categoryQuery);
+    
+                // Toggle visibility based on filters with smooth animation
+                item.classList.remove('visible');
+                setTimeout(() => {
+                    item.classList.add('hidden');
+                }, 250);
+    
+                setTimeout(() => {
+                    if (matchesSearch && matchesCategory) {
+                        item.classList.remove('hidden');
+                        setTimeout(() => {
+                            item.classList.add('visible');
+                        }, 10);
+                    }
+                }, 250);
+            });
+        };
+    
+        // Run the sorting and filtering in sequence
+        sortItems().then(filterItems); // Sort first, then filter
     }
 
      // Running all the functions in the right order 
