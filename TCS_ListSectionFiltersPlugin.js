@@ -185,6 +185,13 @@ function initialiseListSectionFilters() {
                             let categoriesContainer = document.createElement('div');
                             categoriesContainer.classList.add('list-item-categories');
     
+                            // Set bottom margin to match the top margin of '.list-item-content__description'
+                            let descriptionElement = listItem.querySelector('.list-item-content__description');
+                            if (descriptionElement) {
+                                let topMargin = window.getComputedStyle(descriptionElement).marginTop;
+                                categoriesContainer.style.marginBottom = topMargin;
+                            }
+    
                             // Add individual category elements
                             combinedCategories.forEach(category => {
                                 let categoryElement = document.createElement('span');
