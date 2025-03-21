@@ -268,6 +268,9 @@ function initialiseListSectionFilters() {
                 if (listContainer) {
                     listItems.forEach(item => {
                         item.classList.remove('visible');
+                        setTimeout(() => {
+                            item.classList.add('hidden');
+                        }, 250);
                         listContainer.appendChild(item); // Move each item to its new position
                     });
                 }
@@ -295,10 +298,6 @@ function initialiseListSectionFilters() {
                 const matchesCategory = categoryQuery === 'all' || itemCategories.includes(categoryQuery);
     
                 // Toggle visibility based on filters with smooth animation
-                setTimeout(() => {
-                    item.classList.add('hidden');
-                }, 250);
-    
                 setTimeout(() => {
                     if (matchesSearch && matchesCategory) {
                         item.classList.remove('hidden');
