@@ -271,7 +271,9 @@ function initialiseListSectionFilters() {
                         setTimeout(() => {
                             item.classList.add('hidden');
                         }, 250);
-                        listContainer.appendChild(item); // Move each item to its new position
+                        setTimeout(() => {
+                            listContainer.appendChild(item);
+                        }, 250); // Move each item to its new position
                     });
                 }
     
